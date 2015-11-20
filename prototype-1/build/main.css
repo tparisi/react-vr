@@ -1,0 +1,15 @@
+body {
+	background-color: #EAEAEA;
+}
+
+.vr_view {
+	position:absolute;
+	border:1px solid blue;
+	width:50%;
+	height:50%;
+}
+
+.vr_canvas {
+	background-color:green;
+	position:absolute;
+}
