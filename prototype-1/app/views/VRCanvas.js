@@ -11,12 +11,15 @@ var VRCanvas = React.createClass({
 	componentDidMount:function() {
 
 		this.canvas = React.findDOMNode(this);
+		this.initVR();
 	},
 	render: function() {
 		return (
 			<canvas width={this.state.width} height={this.state.height} className="vr_canvas"></canvas>
 			);
-	}
+	},
+	initVR: function() {
+	},
 	
 });
 	
