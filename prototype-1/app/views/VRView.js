@@ -8,6 +8,9 @@ var VRView = React.createClass({
 		return { url: "", width:this.props.width ? this.props.width : 300, 
 			height:this.props.height ? this.props.height : 300 };
 	},
+	componentDidMount: function() {
+
+	},
 	render: function() {
 		return (
 			<div className="vr_view">
