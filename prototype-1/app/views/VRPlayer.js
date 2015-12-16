@@ -3,7 +3,7 @@ var React = require('react');
 var THREE = require('../three/three.js');
 var OrbitControls = require('../three/OrbitControls.js');
 
-var VRCanvas = React.createClass({
+var VRPlayer = React.createClass({
 	canvas:null,
 
 	getInitialState: function() {
@@ -36,7 +36,7 @@ var VRCanvas = React.createClass({
 
 	render: function() {
 		return (
-			<div className="vr_canvas"></div>
+			<div className="vr_player"></div>
 			);
 	},
 
@@ -153,4 +153,4 @@ var VRCanvas = React.createClass({
 	},	
 });
 	
-module.exports = VRCanvas;
+module.exports = VRPlayer;

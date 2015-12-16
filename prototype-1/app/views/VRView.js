@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
-var VRCanvas = require('./VRCanvas.js');
+var VRPlayer = require('./VRPlayer.js');
 
 var VRView = React.createClass({
 	getInitialState: function() {
@@ -14,8 +14,8 @@ var VRView = React.createClass({
 	render: function() {
 		return (
 			<div className="vr_view">
-				<VRCanvas url={this.state.url}>
-				</VRCanvas>
+				<VRPlayer url={this.state.url}>
+				</VRPlayer>
 			</div>
 		);
 	}

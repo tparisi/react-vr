@@ -5,11 +5,13 @@ body {
 .vr_view {
 	position:absolute;
 	border:1px solid blue;
-	width:50%;
-	height:50%;
+	width:100%;
+	height:100%;
 }
 
-.vr_canvas {
+.vr_player {
 	background-color:green;
 	position:absolute;
+	width:100%;
+	height:100%;
 }
