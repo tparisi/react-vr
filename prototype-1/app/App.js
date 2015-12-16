@@ -5,11 +5,11 @@ var VRView = require('./views/VRView.js');
 var App = React.createClass({
 	getInitialState: function() {
 
-		return { url: "hello.wvr" };
+		return { url: "../360videos/MythBusters+-+Sharks+Everywhere!+(360+Video)-3WIS6N_9gjA.mp4" };
 	},
 	render: function() {
 		return (
-			<VRView></VRView>
+			<VRView url={this.state.url}></VRView>
 		);
 	}
 	

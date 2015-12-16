@@ -6,12 +6,6 @@ var OrbitControls = require('../three/OrbitControls.js');
 var VRPlayer = React.createClass({
 	canvas:null,
 
-	getInitialState: function() {
-
-		return { url: "", width:this.props.width ? this.props.width : 300, 
-			height:this.props.height ? this.props.height : 300 };
-	},
-
 	componentDidMount:function() {
 
 		this.container = React.findDOMNode(this);
