@@ -4,15 +4,16 @@ body {
 
 .vr_view {
 	position:absolute;
+	border:1px solid blue;
 	width:100%;
 	height:100%;
 	overflow:hidden;
 }
 
 .vr_canvas {
-	background-color:red;
+	background-color:green;
+	position:absolute;
 	width:100%;
 	height:100%;
-	position:absolute;
 	overflow:hidden;
 }
