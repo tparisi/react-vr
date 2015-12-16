@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 var THREE = require('../three/three.js');
+var OrbitControls = require('../three/OrbitControls.js');
 
 var VRCanvas = React.createClass({
 	canvas:null,
@@ -21,11 +22,14 @@ var VRCanvas = React.createClass({
         // Create the scene content
         this.initScene();
 
+        // Create the camera controller
+        this.initControls();
+
         var that = this;
 
         // Run the run loop
-        window.requestAnimationFrame(function() {
-        	that.run();
+        window.requestAnimationFrame(function(time) {
+        	that.run(time);
         });
 
 	},
@@ -58,57 +62,79 @@ var VRCanvas = React.createClass({
 	    var scene = new THREE.Scene();
 
 	    // Add  a camera so we can view the scene
-	    // Note that this camera's FOV is ignored in favor of the
-	    // Oculus-supplied FOV for each used inside VREffect.
-	    // See VREffect.js h/t Michael Blix
-        var camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 1, 4000 );
+        var camera = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.z = .001;
 		scene.add(camera);
 
-        // Create a texture-mapped cube and add it to the scene
-        // First, create the texture map
-        var mapUrl = "../images/webvr-logo-512.jpeg";
-        var map = THREE.ImageUtils.loadTexture(mapUrl);
+		// Create a video texture for playing the movie
+        var video = document.createElement('video');
+        video.autoplay = true;
+        video.src = this.props.url;
 
-        // Now, create a Basic material; pass in the map
-        var material = new THREE.MeshBasicMaterial({ map: map });
+		var texture = new THREE.VideoTexture( video );
+		texture.minFilter = THREE.LinearFilter;
+		texture.magFilter = THREE.LinearFilter;
+		texture.format = THREE.RGBFormat;        
 
-        // Create the cube geometry
-        var geometry = new THREE.BoxGeometry(2, 2, 2);
+        // 
+        var material = new THREE.MeshBasicMaterial({ map: texture, side:THREE.DoubleSide });
+
+        // Create the sky sphere geometry
+        var geometry = new THREE.SphereGeometry(10, 32, 32);
+        // We're looking at the inside
+		geometry.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
 
         // And put the geometry and material together into a mesh
-        cube = new THREE.Mesh(geometry, material);
-
-        // Move the mesh back from the camera and tilt it toward the viewer
-        cube.position.z = -6;
-        cube.rotation.x = Math.PI / 5;
-        cube.rotation.y = Math.PI / 5;
+        var sphere = new THREE.Mesh(geometry, material);
+        sphere.rotation.y = -Math.PI / 2;
 
         // Finally, add the mesh to our scene
-        scene.add( cube );
+        scene.add( sphere );
 
         this.scene = scene;
         this.camera = camera;
+        this.sphere = sphere;
+
+        this.lastFrameTime = 0;
 	},
 
-	run: function() {
+	initControls: function() {
+		
+		var controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+		controls.zoomSpeed = 0;
+
+		this.controls = controls;
+	},
+
+
+	run: function(time) {
 
 		var that = this;
-		window.requestAnimationFrame(function() {
-			that.run();
+		window.requestAnimationFrame(function(time) {
+			that.run(time);
 		});
 
-		this.main();
+		this.main(time);
 	},
 
-	main: function() {
+	main: function(time) {
 
-		this.update();
+		this.update(time);
 		this.present();
 	},
 
-	update : function() {
+	update : function(time) {
 
+    	var duration = 100000; // ms
 
+		var deltat = time - this.lastFrameTime;
+		this.lastFrameTime = time;
+
+        var fract = deltat / duration;
+        var angle = Math.PI * 2 * fract;
+		//this.sphere.rotation.y += angle;
+
+		this.controls.update();
 	},
 
 	present : function() {

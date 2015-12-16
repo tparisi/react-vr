@@ -5,7 +5,7 @@ var VRCanvas = require('./VRCanvas.js');
 var VRView = React.createClass({
 	getInitialState: function() {
 
-		return { url: "", width:this.props.width ? this.props.width : 300, 
+		return { url: "../360videos/MythBusters+-+Sharks+Everywhere!+(360+Video)-3WIS6N_9gjA.mp4", width:this.props.width ? this.props.width : 300, 
 			height:this.props.height ? this.props.height : 300 };
 	},
 	componentDidMount: function() {
@@ -14,7 +14,7 @@ var VRView = React.createClass({
 	render: function() {
 		return (
 			<div className="vr_view">
-				<VRCanvas width={this.state.width} height={this.state.height}>
+				<VRCanvas url={this.state.url}>
 				</VRCanvas>
 			</div>
 		);
