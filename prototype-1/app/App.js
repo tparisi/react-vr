@@ -9,7 +9,7 @@ var App = React.createClass({
 	},
 	render: function() {
 		return (
-			<VRView width="700"></VRView>
+			<VRView></VRView>
 		);
 	}
 	

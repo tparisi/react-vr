@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 var React = require('react');
+var THREE = require('../three/three.js');
 
 var VRCanvas = React.createClass({
 	canvas:null,
@@ -10,17 +11,38 @@ var VRCanvas = React.createClass({
 	},
 	componentDidMount:function() {
 
-		this.canvas = React.findDOMNode(this);
+		this.container = React.findDOMNode(this);
 		this.initVR();
 	},
 	render: function() {
 		return (
-			<canvas width={this.state.width} height={this.state.height} className="vr_canvas"></canvas>
+			<div className="vr_canvas"></div>
 			);
 	},
 	initVR: function() {
+		// Create the Three.js renderer and attach it to our canvas
+	    this.renderer = new THREE.WebGLRenderer( { antialias: true} );
+
+	    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+
+	    // Set the viewport size
+	    this.container.appendChild(this.renderer.domElement);
+
+	    var that = this;
+	    
+		window.addEventListener( 'resize', function() {
+	    	that.refreshSize();
+	    }, false );
+
 	},
-	
+	refreshSize: function() {
+
+		var fullWidth = this.container.clientWidth,
+            fullHeight = this.container.clientHeight;
+
+		this.renderer.setSize(fullWidth, fullHeight);
+
+	},	
 });
 	
 module.exports = VRCanvas;
